@@ -1,4 +1,5 @@
-import Prismic from '@prismicio/client'
+
+const Prismic = require('@prismicio/client');
 
 export function getPrismicClient(req?: unknown) {
     const prismic = Prismic.client(

@@ -1,10 +1,11 @@
+
 import { GetStaticProps } from "next"
 import { getPrismicClient } from "../../../services/prismic"
 import { RichText } from "prismic-dom"
 import Head from "next/head"
 import styles from "../post.module.scss"
 import Link from "next/dist/client/link"
-import { useSession } from "next-auth/client"
+import { useSession } from "next-auth/react"
 import { useEffect } from "react"
 import { useRouter } from "next/dist/client/router"
 import { redirect } from "next/dist/server/api-utils"
@@ -19,7 +20,7 @@ interface PostPreviewProps {
 }
 
 export default function PostPreview({post}: PostPreviewProps){
-    const [session] = useSession()
+    const {data:session} = useSession()
     const router = useRouter()
 
     useEffect(()=> {
@@ -69,12 +70,12 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
     const prismic = getPrismicClient()
 
     const response = await prismic.getByUID('publication', String(slug),{})
+    console.log(response.data)
 
     const post = {
         slug,
         title: RichText.asText(response.data.title),
         content: RichText.asHtml(response.data.content.splice(0,3)),
-
         updatedAt: new Date(response.last_publication_date).toLocaleString('pt-BR',{
             day: '2-digit',
             month: 'long',
