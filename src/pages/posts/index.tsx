@@ -4,7 +4,7 @@ import { getPrismicClient } from "../../services/prismic"
 import Prismic from '@prismicio/client'
 import { RichText } from 'prismic-dom'
 import { GetStaticProps } from "next"
-import Link from "next/dist/client/link"
+import Link from "next/link"
 
 interface Post {
     slug: string;

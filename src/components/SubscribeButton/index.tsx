@@ -2,7 +2,7 @@ import styles from './styles.module.scss'
 import { useSession, signIn } from "next-auth/react"
 import { getStripeJs } from '../../services/stripe-js'
 import {api} from '../../services/api'
-import { useRouter } from 'next/dist/client/router';
+import { useRouter } from 'next/router';
 
 interface SubcribeButtonProps {
     priceId: string,

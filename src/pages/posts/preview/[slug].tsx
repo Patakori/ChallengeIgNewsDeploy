@@ -4,11 +4,11 @@ import { getPrismicClient } from "../../../services/prismic"
 import { RichText } from "prismic-dom"
 import Head from "next/head"
 import styles from "../post.module.scss"
-import Link from "next/dist/client/link"
+import Link from "next/link"
 import { useSession } from "next-auth/react"
 import { useEffect } from "react"
-import { useRouter } from "next/dist/client/router"
-import { redirect } from "next/dist/server/api-utils"
+import { useRouter } from "next/router"
+
 
 interface PostPreviewProps {
     post:{
@@ -87,6 +87,6 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
         props: {
             post,
         },
-        redirect: 60 * 30, // 30 minutes
+        revalidate: 60 * 30, // 30 minutes
     }
 }
