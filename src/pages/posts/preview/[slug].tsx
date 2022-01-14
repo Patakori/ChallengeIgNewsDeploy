@@ -60,7 +60,7 @@ export default function PostPreview({post}: PostPreviewProps){
 export const getStaticPaths = () => {
     return {
         paths: [],
-        fallback: false
+        fallback: 'blocking'
     }
 }
 
@@ -70,7 +70,6 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
     const prismic = getPrismicClient()
 
     const response = await prismic.getByUID('publication', String(slug),{})
-    console.log(response.data)
 
     const post = {
         slug,
