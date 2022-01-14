@@ -17,12 +17,12 @@ export default NextAuth({
       }
     }),
   ],
+  jwt: {
+    secret: process.env.NEXT_AUTH_SECRET
+  },
 
   callbacks: {
     async session({session}) {
-      if (!session.user?.email) {
-        return session
-      }
 
     try{
       const userActiveSubscription = await fauna.query(
@@ -42,7 +42,8 @@ export default NextAuth({
               ),
               q.Match(
                 q.Index('subscription_by_status'),
-                "active")
+                "active"
+              )
           ])
         )
       )
