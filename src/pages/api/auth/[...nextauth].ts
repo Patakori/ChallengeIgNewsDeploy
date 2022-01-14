@@ -20,7 +20,9 @@ export default NextAuth({
 
   callbacks: {
     async session({session}) {
-      session.user.email
+      if (!session.user?.email) {
+        return session
+      }
 
     try{
       const userActiveSubscription = await fauna.query(
@@ -37,11 +39,10 @@ export default NextAuth({
                   )
                 )
               )
-            ),
-            q.Match(
-              q.Index('subscription_by_status'),
-              "active"
-            )
+              ),
+              q.Match(
+                q.Index('subscription_by_status'),
+                "active")
           ])
         )
       )
@@ -83,7 +84,9 @@ export default NextAuth({
           )
         )  
         return true
-      }  catch {
+      }  catch (error) {
+        console.log('Error in FaunaDB: ' + error)
+
         return false
       }
     },
